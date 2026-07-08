@@ -1,0 +1,46 @@
+[project]
+name = "softener-certs-flasher"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "cryptography>=49.0.0",
+    "esptool>=4.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy>=2.1.0",
+    "pytest>=9.1.1",
+    "ruff>=0.15.20",
+]
+
+[project.scripts]
+softener-certs-flasher = "softener_certs_flasher.cli:main"
+
+[build-system]
+requires = ["setuptools>=83.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "UP",
+]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src", "tests"]
+strict = true

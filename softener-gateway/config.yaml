@@ -1,0 +1,76 @@
+name: Softener Gateway
+version: "0.1.0"
+slug: softener_gateway
+description: Local/bridge gateway for EcoWater/iQua-family softeners, including Viessmann, EcoWater, North Star, Morton, Whirlpool, Rheem, GE and Kenmore branded devices.
+url: https://github.com/arturzx/softener-gateway
+stage: experimental
+arch:
+  - aarch64
+  - amd64
+  - armv7
+startup: application
+boot: auto
+init: false
+hassio_api: true
+hassio_role: default
+services:
+  - mqtt:want
+ingress: true
+ingress_port: 8080
+panel_icon: mdi:water
+panel_title: Softener Gateway
+panel_admin: false
+watchdog: http://[HOST]:[PORT:8080]/health
+ports:
+  8883/tcp: 8883
+ports_description:
+  8883/tcp: Softener TLS MQTT endpoint
+map:
+  - type: share
+    read_only: false
+options:
+  mode: local
+  unit_system: metric
+  endpoint:
+    port: 8883
+    certificate: null
+    key: null
+  aws:
+    host: ""
+    port: 8883
+    certificate: ""
+    key: ""
+    check_hostname: true
+  session_log: false
+  mqtt:
+    enabled: false
+    host: ""
+    port: 1883
+    username: ""
+    password: ""
+    client_id: softener-gateway
+    topic_prefix: softener_gateway
+    homeassistant_discovery: true
+schema:
+  mode: list(local|bridge)
+  unit_system: list(metric|imperial)
+  endpoint:
+    port: port
+    certificate: str
+    key: str
+  aws:
+    host: str?
+    port: port
+    certificate: str?
+    key: str?
+    check_hostname: bool
+  session_log: bool
+  mqtt:
+    enabled: bool
+    host: str?
+    port: port
+    username: str?
+    password: password?
+    client_id: str
+    topic_prefix: str
+    homeassistant_discovery: bool

@@ -1,0 +1,77 @@
+import { createTheme } from "@mantine/core";
+
+export const theme = createTheme({
+  primaryColor: "waterBlue",
+  defaultRadius: "lg",
+  colors: {
+    waterBlue: [
+      "#edfaff",
+      "#d9f2fb",
+      "#afe3f5",
+      "#81d3ef",
+      "#5bc6ea",
+      "#42bde7",
+      "#31b8e5",
+      "#219fcf",
+      "#118db9",
+      "#007aa3",
+    ],
+    aqua: [
+      "#ecfbf8",
+      "#d7f4ee",
+      "#aae8dc",
+      "#7adbc7",
+      "#54d0b7",
+      "#3bc9ad",
+      "#29c5a8",
+      "#1aaf94",
+      "#0c9c83",
+      "#00876f",
+    ],
+    softAmber: [
+      "#fff8e8",
+      "#ffedc7",
+      "#ffd994",
+      "#ffc45d",
+      "#ffb331",
+      "#ffa913",
+      "#ffa400",
+      "#e48f00",
+      "#cb7e00",
+      "#af6b00",
+    ],
+    slateWater: [
+      "#eef6f9",
+      "#dbe6eb",
+      "#b8cbd4",
+      "#91aebd",
+      "#7197aa",
+      "#5d879d",
+      "#527f97",
+      "#426c82",
+      "#365f75",
+      "#275066",
+    ],
+  },
+  radius: {
+    xs: "4px",
+    sm: "8px",
+    md: "12px",
+    lg: "16px",
+    xl: "20px",
+  },
+  shadows: {
+    xs: "0 1px 2px rgba(20, 82, 111, 0.04)",
+    sm: "0 2px 6px rgba(20, 82, 111, 0.06)",
+    md: "0 6px 18px rgba(20, 82, 111, 0.08)",
+    lg: "0 12px 30px rgba(20, 82, 111, 0.1)",
+    xl: "0 18px 44px rgba(20, 82, 111, 0.12)",
+  },
+  fontFamily:
+    'Roboto, "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif',
+  headings: {
+    fontFamily:
+      'Roboto, "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif',
+    fontWeight: "500",
+  },
+});

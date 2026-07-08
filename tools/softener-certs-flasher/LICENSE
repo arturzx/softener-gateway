@@ -1,0 +1,9 @@
+SPDX-License-Identifier: GPL-2.0-or-later
+
+softener-certs-flasher is distributed under GPL-2.0-or-later.
+
+This license is used for the flashing tool because it depends on Espressif esptool,
+which is distributed under GPLv2 or later. The full GPL-2.0 license text is
+available from the Free Software Foundation:
+
+https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt

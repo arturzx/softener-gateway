@@ -1,0 +1,13 @@
+.mypy_cache
+.pytest_cache
+.ruff_cache
+.venv
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+ui/node_modules/
+ui/dist/
+
+images/*
+!images/softener.png
