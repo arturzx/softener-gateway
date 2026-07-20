@@ -8,6 +8,7 @@ from typing import Any, Literal
 from aiohttp import web
 from pydantic import BaseModel
 
+from softener_gateway import __version__
 from softener_gateway.config import HttpConfig
 from softener_gateway.control import (
     ControlDispatchError,
@@ -195,7 +196,7 @@ def _openapi_schema(control_registry: ControlRegistry) -> dict[str, Any]:
         "openapi": "3.1.0",
         "info": {
             "title": "Softener Gateway API",
-            "version": "0.1.0",
+            "version": __version__,
             "description": _api_description(control_registry),
         },
         "paths": {

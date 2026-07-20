@@ -1,5 +1,5 @@
 name: Softener Gateway
-version: "0.1.0"
+version: "0.1.1"
 slug: softener_gateway
 description: Local/bridge gateway for EcoWater/iQua-family softeners, including Viessmann, EcoWater, North Star, Morton, Whirlpool, Rheem, GE and Kenmore branded devices.
 url: https://github.com/arturzx/softener-gateway

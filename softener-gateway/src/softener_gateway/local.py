@@ -112,9 +112,9 @@ class LocalController:
         logger.info("Local mode selected")
         await self._start_device_projector()
         await self._mqtt_adapter.start()
+        wait_forever = asyncio.Event()
         try:
-            while True:
-                await asyncio.sleep(0)
+            await wait_forever.wait()
         finally:
             await self._mqtt_adapter.stop()
             await self._stop_device_projector()

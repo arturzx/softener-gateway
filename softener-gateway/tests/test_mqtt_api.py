@@ -191,12 +191,12 @@ async def _mqtt_api_publishes_homeassistant_device_discovery(
         assert discovery["payload_not_available"] == "offline"
         assert discovery["origin"] == {
             "name": "softener_gateway",
-            "sw_version": "0.1.0",
+            "sw_version": "0.1.1",
         }
         assert discovery["device"] == {
             "identifiers": ["softener_gateway"],
             "name": "Softener",
-            "sw_version": "0.1.0",
+            "sw_version": "0.1.1",
             "model": "Aquahome Duo Smart",
             "hw_version": "r4.5 MPC01154",
             "serial_number": "7938282-22151-5029",
