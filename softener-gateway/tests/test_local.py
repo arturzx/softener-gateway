@@ -2,6 +2,7 @@ import asyncio
 import json
 from collections.abc import Mapping
 from typing import cast
+from unittest.mock import AsyncMock, patch
 
 import pytest
 
@@ -97,6 +98,56 @@ def test_local_controller_owns_device_state_objects() -> None:
     assert controller.configuration_data.fields == {}
     assert controller.historical_data.errors == []
     assert controller.historical_data.totals == {}
+
+
+def test_local_controller_waits_without_spinning_and_cleans_up_on_cancel() -> None:
+    asyncio.run(_local_controller_waits_without_spinning_and_cleans_up_on_cancel())
+
+
+async def _local_controller_waits_without_spinning_and_cleans_up_on_cancel() -> None:
+    event_bus = EventBus()
+    controller = LocalController(
+        GatewayConfig(mode=Mode.LOCAL, endpoint=make_endpoint_config()),
+        event_bus,
+        Endpoint(make_endpoint_config(), event_bus),
+        DeviceShadow(),
+        Device(),
+        DeviceMapper(),
+        DeviceCommandMapper(UnitSystem.METRIC),
+    )
+    # Isolate the idle loop from background workers and hardware/network I/O.
+    yield_to_loop = asyncio.sleep
+    with (
+        patch.object(
+            controller, "_start_device_projector", new_callable=AsyncMock
+        ) as start_projector,
+        patch.object(
+            controller, "_stop_device_projector", new_callable=AsyncMock
+        ) as stop_projector,
+        patch.object(controller._mqtt_adapter, "start", new_callable=AsyncMock) as start_mqtt,
+        patch.object(controller._mqtt_adapter, "stop", new_callable=AsyncMock) as stop_mqtt,
+        patch("softener_gateway.local.asyncio.sleep", wraps=yield_to_loop) as idle_sleep,
+    ):
+        task = asyncio.create_task(controller.run())
+        try:
+            # Give a reintroduced sleep(0) loop several chances to spin, without
+            # wall-clock delays or machine-dependent CPU thresholds.
+            for _ in range(3):
+                await yield_to_loop(0)
+            start_projector.assert_awaited_once_with()
+            start_mqtt.assert_awaited_once_with()
+            assert not task.done()
+            stop_mqtt.assert_not_awaited()
+            stop_projector.assert_not_awaited()
+            idle_sleep.assert_not_awaited()
+        finally:
+            task.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await asyncio.wait_for(task, timeout=1)
+
+        assert task.cancelled()
+        stop_mqtt.assert_awaited_once_with()
+        stop_projector.assert_awaited_once_with()
 
 
 def test_local_controller_publishes_mapped_control_request() -> None:
